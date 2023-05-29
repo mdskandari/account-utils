@@ -9,15 +9,15 @@ use App\Services\UserAccountUtils\Contracts\BankService;
 
 class AccountService
 {
-    private BankService $bankService;
+//    private BankService $bankService;
 //
 //    /**
 //     * @param BankService $bankService
 //     */
-    public function __construct(BankService $bankService)
-    {
-        $this->bankService = $bankService;
-    }
+//    public function __construct(BankService $bankService)
+//    {
+//        $this->bankService = $bankService;
+//    }
 
 
     public function fullBalance()
