@@ -15,7 +15,7 @@ class BankC implements Bank
     {
         return Http::fake([
             'https://bankc.ir' => Http::response([
-                'value' => random_int(0, 150)
+                'value' => 3
             ])
         ]);
     }

@@ -9,15 +9,15 @@ use App\Services\UserAccountUtils\Contracts\BankService;
 
 class AccountService
 {
-//    private BankService $bankService;
-//
-//    /**
-//     * @param BankService $bankService
-//     */
-//    public function __construct(BankService $bankService)
-//    {
-//        $this->bankService = $bankService;
-//    }
+    private BankService $bankService;
+
+    /**
+     * @param BankService $bankService
+     */
+    public function __construct(BankService $bankService)
+    {
+        $this->bankService = $bankService;
+    }
 
 
     public function fullBalance()
@@ -31,10 +31,10 @@ class AccountService
         return $totalAmount;
     }
 
-//    public function bankBalance(string $accountNumber): int
-//    {
-//        return $this->bankService->fetchAccountBalance($accountNumber)->balance;
-//    }
+    public function bankBalance(string $accountNumber): int
+    {
+        return $this->bankService->fetchAccountBalance($accountNumber)['balance'];
+    }
 
     public function getAllUsersBanks(): array
     {

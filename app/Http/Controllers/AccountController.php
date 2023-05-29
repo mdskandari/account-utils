@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Banks\BankB;
-use App\Services\Banks\BankC;
 use App\Services\UserAccountUtils\AccountService;
-use App\Services\UserAccountUtils\Banks\BankBService;
-use App\Services\UserAccountUtils\Contracts\BankService;
 use Exception;
+use http\Exception\InvalidArgumentException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use JetBrains\PhpStorm\NoReturn;
 
 class AccountController extends Controller
 {
@@ -27,6 +23,7 @@ class AccountController extends Controller
 
 
     /**
+     * Total bank accounts balance
      * @throws Exception
      */
     public function index()
@@ -42,8 +39,27 @@ class AccountController extends Controller
         ]);
     }
 
-    public function show(string $bank)
+
+    /**
+     * Single bank account Balance
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function show(Request $request):JsonResponse
     {
-//        dd($this->bankService->fetchAccountBalance('4513218643165166'));
+        if (!$request->bank){
+            throw new InvalidArgumentException('Parameter "Bank" did not provided.');
+        }
+
+        $balance = $this->accountService->bankBalance('123456789');
+        $bank = $request->bank;
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'bank ' . $bank . '  amount Recovered Successfully',
+            'data' => [
+                'balance' => $balance
+            ]
+        ]);
     }
 }

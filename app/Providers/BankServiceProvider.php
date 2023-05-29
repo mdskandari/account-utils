@@ -12,40 +12,24 @@ use Illuminate\Support\ServiceProvider;
 
 class BankServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     */
-    public function register(): void
-    {
-    }
-
-    /**
-     * Bootstrap services.
-     */
     public function boot(): void
     {
-//        dd(request()->route('bank'));
+        if (request()->bank) {
+            $bank = request()->bank;
 
-        $this->app-> bind(BankService::class, function (Application $app) {
-            return new BankAService();
-        });
-
-//        if (request()->bank) {
-//            $bank = request()->bank;
-//
-//            \App::bind(BankService::class, function (Application $app) use ($bank) {
-////                switch ($bank) {
-////                    case 'a':
-//                        return $app->make(BankAService::class);
-////                        break;
-////                    case 'b':
-////                        return new BankBService();
-////                        break;
-////                    case 'c':
-////                        return new BankCService();
-////                        break;
-////                }
-//            });
-//        }
+            $this->app->bind(BankService::class, function (Application $app) use ($bank) {
+                return match ($bank) {
+                    'a' => new BankAService(),
+                    'b' => new BankBService(),
+                    'c' => new BankCService(),
+                    default => new BankAService(),
+                };
+            });
+        } else {
+            $this->app->bind(BankService::class, function (Application $app) {
+                // users default bank
+                return new BankAService();
+            });
+        }
     }
 }
